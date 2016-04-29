@@ -1,0 +1,18 @@
+<html>
+    <head>
+        {% if title %}
+        <title>{{ title }} - My Blog</title>
+        {% else %}
+        <title>AYHSMB</title>
+        {% endif %}
+    </head>
+    
+    <body>
+        <div><a href="/home">Home</a></div>
+        <hr>
+        {% block content %}
+        {% endblock %}
+        
+    </body>
+</html>
+
