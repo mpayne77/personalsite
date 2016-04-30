@@ -2,6 +2,18 @@ from app import app, models
 from flask import render_template
 
 
+@app.before_request
+def before_request():
+    db = models.mysql_db
+    db.connect()
+    
+    
+@app.after_request
+def after_request(response):
+    db = models.mysql_db
+    db.close()
+    return response
+    
 
 @app.route('/')
 @app.route('/home')
@@ -28,15 +40,5 @@ def page_not_found(e):
    
     
     
-@app.before_request
-def before_request():
-    db = models.mysql_db
-    db.connect()
-    
-    
-@app.after_request
-def after_request(response):
-    db = models.mysql_db
-    db.close()
-    return response
+
     
