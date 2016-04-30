@@ -2,7 +2,7 @@ from app import app, models
 from flask import (render_template, flash, redirect, url_for, request)
 from peewee import *
 from playhouse.flask_utils import get_object_or_404
-
+from werkzeug import secure_filename
 
 
 @app.before_request
@@ -16,6 +16,11 @@ def after_request(response):
     db = models.mysql_db
     db.close()
     return response
+    
+
+def allowed_file(filename):
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1] in app.ALLOWED_EXTENSIONS
     
 
 @app.route('/')
