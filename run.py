@@ -10,4 +10,4 @@ models.mysql_db.create_tables([models.Blogpost], safe=True)
 
 app.run(host='0.0.0.0', port=8080)
 
-
+db = models.mysql_db

@@ -4,6 +4,7 @@ from peewee import *
 from playhouse.flask_utils import get_object_or_404
 
 
+
 @app.before_request
 def before_request():
     db = models.mysql_db
@@ -48,9 +49,7 @@ def create():
             blogpost = models.Blogpost.create(
                 title = request.form['title'],
                 content=request.form['content'],
-                thumbnail = request.form['thumbnail'],
                 published = request.form.get('published') or False)
-            blogpost.save()
             flash('Blog post created successfully.', 'success')
             
             if blogpost.published:
