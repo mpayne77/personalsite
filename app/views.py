@@ -1,5 +1,7 @@
 from app import app, models
-from flask import (render_template, flash, redirect, url_for, get_object_or_404)
+from flask import (render_template, flash, redirect, url_for, request)
+from peewee import *
+from playhouse.flask_utils import get_object_or_404
 
 
 @app.before_request
@@ -40,7 +42,7 @@ def page_not_found(e):
    
     
 @app.route('/create', methods=['GET', 'POST'])
-def create(request):
+def create():
     if request.method == 'POST':
         if request.form.get('title') and request.form.get('content'):
             blogpost = models.Blogpost.create(
