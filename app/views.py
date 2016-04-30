@@ -1,5 +1,5 @@
 from app import app, models
-from flask import render_template
+from flask import (render_template, flash, redirect, url_for, get_object_or_404)
 
 
 @app.before_request
@@ -39,6 +39,52 @@ def page_not_found(e):
     return render_template("404.html")
    
     
+@app.route('/create', methods=['GET', 'POST'])
+def create(request):
+    if request.method == 'POST':
+        if request.form.get('title') and request.form.get('content'):
+            blogpost = models.Blogpost.create(
+                title = request.form['title'],
+                content=request.form['content'],
+                thumbnail = request.form['thumbnail'],
+                published = request.form.get('published') or False)
+            blogpost.save()
+            flash('Blog post created successfully.', 'success')
+            
+            if blogpost.published:
+                return redirect(url_for('home'))
+            else:
+                return redirect(url_for('edit', slug=blogpost.slug))
+                
+        else:
+            flash('Title and Content are required.', 'danger')
+            
+    return render_template('create.html')
     
+    
+@app.route('/<slug>/edit', methods=['GET', 'POST'])
+def edit(request, slug):
+    if request.method == 'POST':
+        blogpost = get_object_or_404(models.Blogpost, models.Blogpost.slug == slug)
+        if request.form.get('title') and request.form.get('content'):
+            blogpost = models.Blogpost.create(
+                title = request.form['title'],
+                content=request.form['content'],
+                thumbnail = request.form['thumbnail'],
+                published = request.form.get('published') or False)
+            blogpost.save()
+            flash('Blog post created successfully.', 'success')
+            
+            if blogpost.published:
+                return redirect(url_for('home'))
+            else:
+                return redirect(url_for('edit', slug=blogpost.slug))
+                
+        else:
+            flash('Title and Content are required.', 'danger')
+            
+    return render_template('create.html')  
+
+            
 
     
