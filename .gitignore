@@ -15,4 +15,4 @@ myvenv/
 *.db
 
 # Database migrations
-db_migrations/
+db_repository/
