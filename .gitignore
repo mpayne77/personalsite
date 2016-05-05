@@ -11,3 +11,8 @@ myvenv/
 # C9 IDE stuff
 .c9/
 
+# sqlite databases
+*.db
+
+# Database migrations
+db_migrations/
