@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect
+from flask import render_template, flash, redirect, url_for
 from app import app, models
 from .forms import LoginForm
 from passlib.hash import sha256_crypt
@@ -23,7 +23,7 @@ def login():
         
         if attempted_username == app.config['ADMIN_USERNAME'] and passcheck:
             flash('You are logged in!')
-            return redirect('index')
+            return redirect(url_for('index'))
             
         else:
             flash('Login error')
