@@ -3,8 +3,11 @@
 {% block content %}
 
 {% for post in posts %}
-<div>Written by: {{ post.author.username }}<br>
-    <p><h3>{{ post.body }}</h3></p>
+<div>
+    <h1>{{ post.title }}</h1>
+    
+    <p><h3>{{ post.subtitle }}</h3></p>
+    <p>{{ post.content }}</p>
 </div>
 <hr>
 {% endfor %}
