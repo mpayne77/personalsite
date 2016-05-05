@@ -8,12 +8,24 @@ def index():
     return render_template('index.html')
     
 
-@app.route('/login/', methods = ['GET', 'POST'])
+@app.route('/login/', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        flash('Login requested for OpenID="%s", remember_me=%s' %
-            (form.openid.data, str(form.remember_me.data)))
-        return redirect('/index')
-    return render_template('login.html', title='Sign In', form=form,
-                            providers=app.config['OPENID_PROVIDERS'])
+        #attempted_username = request.form['username']
+        #attempted_password = request.form['pasword']
+        attempted_username = form.username.data
+        attempted_password = form.password.data
+        
+        if attempted_username == app.config['ADMIN_USERNAME'] and \
+            attempted_password == app.config['ADMIN_PASSWORD']:
+            flash('You are logged in!')
+            return redirect('index')
+            
+        else:
+            flash('Login error')
+            return render_template('login.html', title='Sign In', form=form)
+    return render_template('login.html', title='Sign In', form=form)
+    
+
+    
