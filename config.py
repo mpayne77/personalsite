@@ -3,10 +3,12 @@ import os
 WTF_CSRF_ENABLED = True
 SECRET_KEY = 'SUPBRO'
 
+# Currently I'm envisioning myself as the only person allowed to upload content
+# so I'm skipping a 'Users' table in the database.
 ADMIN_USERNAME = 'Matt'
+ADMIN_PASSWORD = '$5$rounds=535000$G61/o0QD8ZTaJvhE$Q8/JCCRAqUyEbiiM2o61jw6sEd8Vx2/L5Ywpn/9FnvA'
 
-# Yes, this will be hashed if and when this ever goes live
-ADMIN_PASSWORD = '12345'
+ADMIN_MODE = False
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
