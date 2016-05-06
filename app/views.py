@@ -3,11 +3,17 @@ from app import app, models
 from .forms import LoginForm
 from passlib.hash import sha256_crypt
 
+
+@app.errorhandler(404)
+def error_404(e):
+    return render_template('404.html')
+
+
 @app.route('/')
-@app.route('/index/')
-def index():
+@app.route('/home/')
+def home():
     posts = models.BlogPost.query.all()
-    return render_template('index.html', posts=posts)
+    return render_template('home.html', posts=posts)
     
 
 @app.route('/login/', methods=['GET', 'POST'])
@@ -23,7 +29,7 @@ def login():
         
         if attempted_username == app.config['ADMIN_USERNAME'] and passcheck:
             flash('You are logged in!')
-            return redirect(url_for('index'))
+            return redirect(url_for('home'))
             
         else:
             flash('Login error')
