@@ -1,8 +1,14 @@
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, request
 from app import app, models
-from .forms import LoginForm
+from .forms import LoginForm, CreateForm
 from passlib.hash import sha256_crypt
 
+
+def flash_errors(form):
+    for field, errors in form.errors.items():
+        for error in errors:
+            flash('Error in the %s field - %s' % (
+                getattr(form, field).label.text, error))
 
 @app.errorhandler(404)
 def error_404(e):
@@ -37,4 +43,17 @@ def login():
     return render_template('login.html', title='Sign In', form=form)
     
 
+@app.route('/create/', methods=['GET', 'POST'])
+def create():
+    form = CreateForm()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            flash('Create form is valid')
+            return redirect(url_for('home'))
+        else:
+            flash_errors(form)
+            return redirect(url_for('create'))
+    else:
+        return render_template('create.html', form=form)
+    
     
