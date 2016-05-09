@@ -1,5 +1,5 @@
 from flask import render_template, flash, redirect, url_for, request
-from app import app, models
+from app import app, models, db
 from .forms import LoginForm, CreateForm
 from passlib.hash import sha256_crypt
 
@@ -9,6 +9,7 @@ def flash_errors(form):
         for error in errors:
             flash('Error in the %s field - %s' % (
                 getattr(form, field).label.text, error))
+
 
 @app.errorhandler(404)
 def error_404(e):
@@ -48,7 +49,16 @@ def create():
     form = CreateForm()
     if request.method == 'POST':
         if form.validate_on_submit():
-            flash('Create form is valid')
+            
+            newpost = models.BlogPost()
+            newpost.title = request.form.get('title')
+            # newpost.subtitle = request.form.get('subtitle')
+            # newpost.content = request.form.get('content')
+            # newpost.author = request.form.get('author')
+            db.session.add(newpost)
+            db.session.commit()
+            
+            flash('New entry posted')
             return redirect(url_for('home'))
         else:
             flash_errors(form)

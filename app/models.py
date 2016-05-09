@@ -12,6 +12,6 @@ class BlogPost(db.Model):
     timestamp = db.column(db.DateTime)
     published = db.Column(db.Boolean)
     
-    def __str__(self):
+    def __repr__(self):
         return self.title
     
