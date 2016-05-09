@@ -1,5 +1,5 @@
 from flask.ext.wtf import Form
-from wtforms import StringField, BooleanField, PasswordField, TextField
+from wtforms import StringField, BooleanField, PasswordField, TextField, FileField
 #from wtforms.validators import DataRequired
 from wtforms import validators
 
@@ -15,7 +15,12 @@ class CreateForm(Form):
         message='Title must be between 1 and 200 characters!')])
     subtitle = StringField('Subtitle', [validators.Length(min=0, max=200,
         message='Subtitle may not exceed 200 characters')])
+    thumbnail = FileField('Thumbnail')
     content = TextField('Content', [validators.Length(min=1,
         message='You need to enter some content dummy!')])
+    author = StringField('Author', [validators.Length(min=1, 
+        message='You need to enter an author!')])
+    published = BooleanField()
+    
         
     

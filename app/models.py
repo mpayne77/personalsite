@@ -6,10 +6,11 @@ class BlogPost(db.Model):
     title = db.Column(db.String(200))
     subtitle = db.Column(db.String(200))
     slug = db.Column(db.String(200))
-    thumbnail = db.Column(db.Text)
+    thumbnail = db.Column(db.String(200))
     content = db.Column(db.Text)
     author = db.Column(db.String(100))
     timestamp = db.column(db.DateTime)
+    published = db.Column(db.Boolean)
     
     def __str__(self):
         return self.title
