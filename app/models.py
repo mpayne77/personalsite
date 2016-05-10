@@ -9,7 +9,7 @@ class BlogPost(db.Model):
     thumbnail = db.Column(db.String(200))
     content = db.Column(db.Text)
     author = db.Column(db.String(100))
-    timestamp = db.column(db.DateTime)
+    timestamp = db.Column(db.DateTime)
     published = db.Column(db.Boolean)
     
     def __repr__(self):

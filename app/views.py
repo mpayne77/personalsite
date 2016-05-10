@@ -2,6 +2,8 @@ from flask import render_template, flash, redirect, url_for, request
 from app import app, models, db
 from .forms import LoginForm, CreateForm
 from passlib.hash import sha256_crypt
+from datetime import datetime
+
 
 
 def flash_errors(form):
@@ -19,7 +21,7 @@ def error_404(e):
 @app.route('/')
 @app.route('/home/')
 def home():
-    posts = models.BlogPost.query.all()
+    posts = models.BlogPost.query.order_by(models.BlogPost.timestamp.desc()).all()
     return render_template('home.html', posts=posts)
     
 
@@ -52,9 +54,11 @@ def create():
             
             newpost = models.BlogPost()
             newpost.title = request.form.get('title')
-            # newpost.subtitle = request.form.get('subtitle')
-            # newpost.content = request.form.get('content')
-            # newpost.author = request.form.get('author')
+            newpost.subtitle = request.form.get('subtitle')
+            newpost.content = request.form.get('content')
+            newpost.author = request.form.get('author')
+            newpost.timestamp = datetime.now()
+            #newpost.published = request.form.get('published')
             db.session.add(newpost)
             db.session.commit()
             

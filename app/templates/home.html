@@ -5,9 +5,11 @@
 {% for post in posts %}
 <div>
     <h1>{{ post.title }}</h1>
-    
     <p><h3>{{ post.subtitle }}</h3></p>
+    <p>Posted by: {{ post.author }}</p>
+    <p>Published date: {{post.timestamp}} </p>
     <p>{{ post.content }}</p>
+    
 </div>
 <hr>
 {% endfor %}
