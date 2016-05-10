@@ -29,8 +29,6 @@ def home():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        #attempted_username = request.form['username']
-        #attempted_password = request.form['pasword']
         attempted_username = form.username.data
         attempted_password = form.password.data
         passcheck = sha256_crypt.verify(attempted_password,
@@ -58,6 +56,11 @@ def create():
             newpost.content = request.form.get('content')
             newpost.author = request.form.get('author')
             newpost.timestamp = datetime.now()
+            
+            if request.form.get('published') == 'y':
+                newpost.published = True
+            else:
+                newpost.published = False
             #newpost.published = request.form.get('published')
             db.session.add(newpost)
             db.session.commit()
